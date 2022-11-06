@@ -1,1 +1,932 @@
-{"openapi":"3.0.2","info":{"title":"FastAPI","version":"0.1.0"},"paths":{"/":{"get":{"summary":"Health Check","operationId":"health_check__get","responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{}}}}}}},"/auth":{"post":{"summary":"Auth","operationId":"auth_auth_post","requestBody":{"content":{"application/x-www-form-urlencoded":{"schema":{"$ref":"#/components/schemas/Body_auth_auth_post"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/TokenBase"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/sign-up":{"post":{"summary":"Create User","operationId":"create_user_sign_up_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/UserCreate"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/User"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}}}},"/users/me":{"get":{"summary":"Read Users Me","operationId":"read_users_me_users_me_get","responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/UserBase"}}}}},"security":[{"OAuth2PasswordBearer":[]}]}},"/files":{"post":{"summary":"Create File","operationId":"create_file_files_post","requestBody":{"content":{"multipart/form-data":{"schema":{"$ref":"#/components/schemas/Body_create_file_files_post"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApartmentsOrigins"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"OAuth2PasswordBearer":[]}]}},"/choice":{"post":{"summary":"Create Post","operationId":"create_post_choice_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApartmentsOrigins"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ResponseApartmentsOrigins"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"OAuth2PasswordBearer":[]}]}},"/add":{"post":{"summary":"Add Orogin","operationId":"add_orogin_add_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/AddOriginApartment"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApartmentsAnalogs"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"OAuth2PasswordBearer":[]}]}},"/next":{"post":{"summary":"Next Analogs","operationId":"next_analogs_next_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/GetNextApartments"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApartmentsAnalogs"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"OAuth2PasswordBearer":[]}]}},"/calculate":{"post":{"summary":"Calculate","operationId":"calculate_calculate_post","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApartmentsCalculate"}}},"required":true},"responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{"$ref":"#/components/schemas/ApartmentsCalculate"}}}},"422":{"description":"Validation Error","content":{"application/json":{"schema":{"$ref":"#/components/schemas/HTTPValidationError"}}}}},"security":[{"OAuth2PasswordBearer":[]}]}},"/getfile":{"get":{"summary":"Download File","operationId":"download_file_getfile_get","responses":{"200":{"description":"Successful Response","content":{"application/json":{"schema":{}}}}},"security":[{"OAuth2PasswordBearer":[]}]}}},"components":{"schemas":{"AddOriginApartment":{"title":"AddOriginApartment","required":["origin"],"type":"object","properties":{"origin":{"$ref":"#/components/schemas/ApartmentsOrigin"},"count":{"title":"Count","type":"integer","default":3},"max_distance":{"title":"Max Distance","type":"integer","default":1500},"kfloor":{"title":"Kfloor","type":"integer","default":4},"search_floor":{"title":"Search Floor","type":"integer","default":0},"search_max_floor":{"title":"Search Max Floor","type":"integer","default":0}}},"ApartmentsAnalog":{"title":"ApartmentsAnalog","required":["address","count_rooms","segment","wall_material","condition","maximum_floor","floor","apartment_area","kitchen_area","is_balcony","metro_distance_in_minutes","price","url"],"type":"object","properties":{"address":{"title":"Address","type":"string"},"count_rooms":{"title":"Count Rooms","type":"integer"},"segment":{"$ref":"#/components/schemas/Segment"},"wall_material":{"$ref":"#/components/schemas/WallMaterial"},"condition":{"$ref":"#/components/schemas/Condition"},"maximum_floor":{"title":"Maximum Floor","type":"integer"},"floor":{"title":"Floor","type":"integer"},"apartment_area":{"title":"Apartment Area","type":"number"},"kitchen_area":{"title":"Kitchen Area","type":"number"},"is_balcony":{"title":"Is Balcony","type":"boolean"},"metro_distance_in_minutes":{"title":"Metro Distance In Minutes","type":"integer"},"price":{"title":"Price","type":"integer"},"url":{"title":"Url","type":"string"}}},"ApartmentsAnalogs":{"title":"ApartmentsAnalogs","required":["apartments"],"type":"object","properties":{"size":{"title":"Size","type":"integer","default":0},"apartments":{"title":"Apartments","type":"array","items":{"$ref":"#/components/schemas/ApartmentsAnalog"}}}},"ApartmentsCalculate":{"title":"ApartmentsCalculate","required":["origin","apartments"],"type":"object","properties":{"size":{"title":"Size","type":"integer","default":0},"origin":{"$ref":"#/components/schemas/ApartmentsOrigin"},"apartments":{"title":"Apartments","type":"array","items":{"$ref":"#/components/schemas/ApartmentsAnalog"}},"percentage":{"title":"Percentage","type":"array","items":{"$ref":"#/components/schemas/PercentageCalculate"}},"price":{"title":"Price","type":"integer","default":0}}},"ApartmentsOrigin":{"title":"ApartmentsOrigin","required":["address","count_rooms","segment","wall_material","condition","maximum_floor","floor","apartment_area","kitchen_area","is_balcony","metro_distance_in_minutes"],"type":"object","properties":{"address":{"title":"Address","type":"string"},"count_rooms":{"title":"Count Rooms","type":"integer"},"segment":{"$ref":"#/components/schemas/Segment"},"wall_material":{"$ref":"#/components/schemas/WallMaterial"},"condition":{"$ref":"#/components/schemas/Condition"},"maximum_floor":{"title":"Maximum Floor","type":"integer"},"floor":{"title":"Floor","type":"integer"},"apartment_area":{"title":"Apartment Area","type":"number"},"kitchen_area":{"title":"Kitchen Area","type":"number"},"is_balcony":{"title":"Is Balcony","type":"boolean"},"metro_distance_in_minutes":{"title":"Metro Distance In Minutes","type":"integer"}}},"ApartmentsOrigins":{"title":"ApartmentsOrigins","required":["apartments"],"type":"object","properties":{"size":{"title":"Size","type":"integer","default":0},"apartments":{"title":"Apartments","type":"array","items":{"$ref":"#/components/schemas/ApartmentsOrigin"}}}},"Body_auth_auth_post":{"title":"Body_auth_auth_post","required":["username","password"],"type":"object","properties":{"grant_type":{"title":"Grant Type","pattern":"password","type":"string"},"username":{"title":"Username","type":"string"},"password":{"title":"Password","type":"string"},"scope":{"title":"Scope","type":"string","default":""},"client_id":{"title":"Client Id","type":"string"},"client_secret":{"title":"Client Secret","type":"string"}}},"Body_create_file_files_post":{"title":"Body_create_file_files_post","required":["file"],"type":"object","properties":{"file":{"title":"File","type":"string","format":"binary"}}},"Condition":{"title":"Condition","enum":["без отделки","муниципальный ремонт","современная отделка"],"description":"An enumeration."},"GetNextApartments":{"title":"GetNextApartments","required":["count_rooms"],"type":"object","properties":{"count":{"title":"Count","type":"integer","default":1},"count_rooms":{"title":"Count Rooms","type":"integer"}}},"HTTPValidationError":{"title":"HTTPValidationError","type":"object","properties":{"detail":{"title":"Detail","type":"array","items":{"$ref":"#/components/schemas/ValidationError"}}}},"PercentageCalculate":{"title":"PercentageCalculate","type":"object","properties":{"price":{"title":"Price","type":"number","default":0.0},"floor":{"title":"Floor","type":"number","default":0.0},"apartment_area":{"title":"Apartment Area","type":"number","default":0.0},"kitchen_area":{"title":"Kitchen Area","type":"number","default":0.0},"balcony":{"title":"Balcony","type":"number","default":0.0},"metro_distance_in_minutes":{"title":"Metro Distance In Minutes","type":"number","default":0.0},"condition":{"title":"Condition","type":"number","default":0.0}}},"ResponseApartmentsOrigins":{"title":"ResponseApartmentsOrigins","type":"object","properties":{"size":{"title":"Size","type":"integer","default":0},"apartments":{"title":"Apartments","type":"array","items":{"$ref":"#/components/schemas/ApartmentsOrigins"},"default":[]}}},"Segment":{"title":"Segment","enum":["новостройка","современное жилье","старый жилой фонд"],"description":"An enumeration."},"TokenBase":{"title":"TokenBase","required":["access_token","expires"],"type":"object","properties":{"access_token":{"title":"Access Token","type":"string","format":"uuid4"},"expires":{"title":"Expires","type":"string","format":"date-time"},"token_type":{"title":"Token Type","type":"string","default":"bearer"}}},"User":{"title":"User","required":["id","email","name"],"type":"object","properties":{"id":{"title":"Id","type":"integer"},"email":{"title":"Email","type":"string","format":"email"},"name":{"title":"Name","type":"string"},"token":{"title":"Token","allOf":[{"$ref":"#/components/schemas/TokenBase"}],"default":{}}},"description":"Формирует тело ответа с деталями пользователя и токеном "},"UserBase":{"title":"UserBase","required":["id","email","name"],"type":"object","properties":{"id":{"title":"Id","type":"integer"},"email":{"title":"Email","type":"string","format":"email"},"name":{"title":"Name","type":"string"}},"description":"Формирует тело ответа с деталями пользователя "},"UserCreate":{"title":"UserCreate","required":["email","name","password"],"type":"object","properties":{"email":{"title":"Email","type":"string","format":"email"},"name":{"title":"Name","type":"string"},"password":{"title":"Password","type":"string"}},"description":"Проверяет sign-up "},"ValidationError":{"title":"ValidationError","required":["loc","msg","type"],"type":"object","properties":{"loc":{"title":"Location","type":"array","items":{"anyOf":[{"type":"string"},{"type":"integer"}]}},"msg":{"title":"Message","type":"string"},"type":{"title":"Error Type","type":"string"}}},"WallMaterial":{"title":"WallMaterial","enum":["кирпич","панель","монолит"],"description":"An enumeration."}},"securitySchemes":{"OAuth2PasswordBearer":{"type":"oauth2","flows":{"password":{"scopes":{},"tokenUrl":"/auth"}}}}}}
+# С„Р°Р№Р» РѕС‚РєСЂС‹РІР°С‚СЊ С‡РµСЂРµР· https://editor-next.swagger.io/
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "FastAPI",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Health Check",
+        "operationId": "health_check__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth": {
+      "post": {
+        "summary": "Auth",
+        "operationId": "auth_auth_post",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_auth_auth_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenBase"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sign-up": {
+      "post": {
+        "summary": "Create User",
+        "operationId": "create_user_sign_up_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "summary": "Read Users Me",
+        "operationId": "read_users_me_users_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserBase"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/files": {
+      "post": {
+        "summary": "Create File",
+        "operationId": "create_file_files_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_create_file_files_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApartmentsOrigins"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/choice": {
+      "post": {
+        "summary": "Create Post",
+        "operationId": "create_post_choice_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApartmentsOrigins"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseApartmentsOrigins"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/add": {
+      "post": {
+        "summary": "Add Orogin",
+        "operationId": "add_orogin_add_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddOriginApartment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApartmentsAnalogs"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/next": {
+      "post": {
+        "summary": "Next Analogs",
+        "operationId": "next_analogs_next_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetNextApartments"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApartmentsAnalogs"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/calculate": {
+      "post": {
+        "summary": "Calculate",
+        "operationId": "calculate_calculate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApartmentsCalculate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApartmentsCalculate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    },
+    "/getfile": {
+      "get": {
+        "summary": "Download File",
+        "operationId": "download_file_getfile_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2PasswordBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddOriginApartment": {
+        "title": "AddOriginApartment",
+        "required": [
+          "origin"
+        ],
+        "type": "object",
+        "properties": {
+          "origin": {
+            "$ref": "#/components/schemas/ApartmentsOrigin"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer",
+            "default": 3
+          },
+          "max_distance": {
+            "title": "Max Distance",
+            "type": "integer",
+            "default": 1500
+          },
+          "kfloor": {
+            "title": "Kfloor",
+            "type": "integer",
+            "default": 4
+          },
+          "search_floor": {
+            "title": "Search Floor",
+            "type": "integer",
+            "default": 0
+          },
+          "search_max_floor": {
+            "title": "Search Max Floor",
+            "type": "integer",
+            "default": 0
+          }
+        }
+      },
+      "ApartmentsAnalog": {
+        "title": "ApartmentsAnalog",
+        "required": [
+          "address",
+          "count_rooms",
+          "segment",
+          "wall_material",
+          "condition",
+          "maximum_floor",
+          "floor",
+          "apartment_area",
+          "kitchen_area",
+          "is_balcony",
+          "metro_distance_in_minutes",
+          "price",
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "address": {
+            "title": "Address",
+            "type": "string"
+          },
+          "count_rooms": {
+            "title": "Count Rooms",
+            "type": "integer"
+          },
+          "segment": {
+            "$ref": "#/components/schemas/Segment"
+          },
+          "wall_material": {
+            "$ref": "#/components/schemas/WallMaterial"
+          },
+          "condition": {
+            "$ref": "#/components/schemas/Condition"
+          },
+          "maximum_floor": {
+            "title": "Maximum Floor",
+            "type": "integer"
+          },
+          "floor": {
+            "title": "Floor",
+            "type": "integer"
+          },
+          "apartment_area": {
+            "title": "Apartment Area",
+            "type": "number"
+          },
+          "kitchen_area": {
+            "title": "Kitchen Area",
+            "type": "number"
+          },
+          "is_balcony": {
+            "title": "Is Balcony",
+            "type": "boolean"
+          },
+          "metro_distance_in_minutes": {
+            "title": "Metro Distance In Minutes",
+            "type": "integer"
+          },
+          "price": {
+            "title": "Price",
+            "type": "integer"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        }
+      },
+      "ApartmentsAnalogs": {
+        "title": "ApartmentsAnalogs",
+        "required": [
+          "apartments"
+        ],
+        "type": "object",
+        "properties": {
+          "size": {
+            "title": "Size",
+            "type": "integer",
+            "default": 0
+          },
+          "apartments": {
+            "title": "Apartments",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApartmentsAnalog"
+            }
+          }
+        }
+      },
+      "ApartmentsCalculate": {
+        "title": "ApartmentsCalculate",
+        "required": [
+          "origin",
+          "apartments"
+        ],
+        "type": "object",
+        "properties": {
+          "size": {
+            "title": "Size",
+            "type": "integer",
+            "default": 0
+          },
+          "origin": {
+            "$ref": "#/components/schemas/ApartmentsOrigin"
+          },
+          "apartments": {
+            "title": "Apartments",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApartmentsAnalog"
+            }
+          },
+          "percentage": {
+            "title": "Percentage",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PercentageCalculate"
+            }
+          },
+          "price": {
+            "title": "Price",
+            "type": "integer",
+            "default": 0
+          }
+        }
+      },
+      "ApartmentsOrigin": {
+        "title": "ApartmentsOrigin",
+        "required": [
+          "address",
+          "count_rooms",
+          "segment",
+          "wall_material",
+          "condition",
+          "maximum_floor",
+          "floor",
+          "apartment_area",
+          "kitchen_area",
+          "is_balcony",
+          "metro_distance_in_minutes"
+        ],
+        "type": "object",
+        "properties": {
+          "address": {
+            "title": "Address",
+            "type": "string"
+          },
+          "count_rooms": {
+            "title": "Count Rooms",
+            "type": "integer"
+          },
+          "segment": {
+            "$ref": "#/components/schemas/Segment"
+          },
+          "wall_material": {
+            "$ref": "#/components/schemas/WallMaterial"
+          },
+          "condition": {
+            "$ref": "#/components/schemas/Condition"
+          },
+          "maximum_floor": {
+            "title": "Maximum Floor",
+            "type": "integer"
+          },
+          "floor": {
+            "title": "Floor",
+            "type": "integer"
+          },
+          "apartment_area": {
+            "title": "Apartment Area",
+            "type": "number"
+          },
+          "kitchen_area": {
+            "title": "Kitchen Area",
+            "type": "number"
+          },
+          "is_balcony": {
+            "title": "Is Balcony",
+            "type": "boolean"
+          },
+          "metro_distance_in_minutes": {
+            "title": "Metro Distance In Minutes",
+            "type": "integer"
+          }
+        }
+      },
+      "ApartmentsOrigins": {
+        "title": "ApartmentsOrigins",
+        "required": [
+          "apartments"
+        ],
+        "type": "object",
+        "properties": {
+          "size": {
+            "title": "Size",
+            "type": "integer",
+            "default": 0
+          },
+          "apartments": {
+            "title": "Apartments",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApartmentsOrigin"
+            }
+          }
+        }
+      },
+      "Body_auth_auth_post": {
+        "title": "Body_auth_auth_post",
+        "required": [
+          "username",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "grant_type": {
+            "title": "Grant Type",
+            "pattern": "password",
+            "type": "string"
+          },
+          "username": {
+            "title": "Username",
+            "type": "string"
+          },
+          "password": {
+            "title": "Password",
+            "type": "string"
+          },
+          "scope": {
+            "title": "Scope",
+            "type": "string",
+            "default": ""
+          },
+          "client_id": {
+            "title": "Client Id",
+            "type": "string"
+          },
+          "client_secret": {
+            "title": "Client Secret",
+            "type": "string"
+          }
+        }
+      },
+      "Body_create_file_files_post": {
+        "title": "Body_create_file_files_post",
+        "required": [
+          "file"
+        ],
+        "type": "object",
+        "properties": {
+          "file": {
+            "title": "File",
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "Condition": {
+        "title": "Condition",
+        "enum": [
+          "Р±РµР· РѕС‚РґРµР»РєРё",
+          "РјСѓРЅРёС†РёРїР°Р»СЊРЅС‹Р№ СЂРµРјРѕРЅС‚",
+          "СЃРѕРІСЂРµРјРµРЅРЅР°СЏ РѕС‚РґРµР»РєР°"
+        ],
+        "description": "An enumeration."
+      },
+      "GetNextApartments": {
+        "title": "GetNextApartments",
+        "required": [
+          "count_rooms"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer",
+            "default": 1
+          },
+          "count_rooms": {
+            "title": "Count Rooms",
+            "type": "integer"
+          }
+        }
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "PercentageCalculate": {
+        "title": "PercentageCalculate",
+        "type": "object",
+        "properties": {
+          "price": {
+            "title": "Price",
+            "type": "number",
+            "default": 0.0
+          },
+          "floor": {
+            "title": "Floor",
+            "type": "number",
+            "default": 0.0
+          },
+          "apartment_area": {
+            "title": "Apartment Area",
+            "type": "number",
+            "default": 0.0
+          },
+          "kitchen_area": {
+            "title": "Kitchen Area",
+            "type": "number",
+            "default": 0.0
+          },
+          "balcony": {
+            "title": "Balcony",
+            "type": "number",
+            "default": 0.0
+          },
+          "metro_distance_in_minutes": {
+            "title": "Metro Distance In Minutes",
+            "type": "number",
+            "default": 0.0
+          },
+          "condition": {
+            "title": "Condition",
+            "type": "number",
+            "default": 0.0
+          }
+        }
+      },
+      "ResponseApartmentsOrigins": {
+        "title": "ResponseApartmentsOrigins",
+        "type": "object",
+        "properties": {
+          "size": {
+            "title": "Size",
+            "type": "integer",
+            "default": 0
+          },
+          "apartments": {
+            "title": "Apartments",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApartmentsOrigins"
+            },
+            "default": []
+          }
+        }
+      },
+      "Segment": {
+        "title": "Segment",
+        "enum": [
+          "РЅРѕРІРѕСЃС‚СЂРѕР№РєР°",
+          "СЃРѕРІСЂРµРјРµРЅРЅРѕРµ Р¶РёР»СЊРµ",
+          "СЃС‚Р°СЂС‹Р№ Р¶РёР»РѕР№ С„РѕРЅРґ"
+        ],
+        "description": "An enumeration."
+      },
+      "TokenBase": {
+        "title": "TokenBase",
+        "required": [
+          "access_token",
+          "expires"
+        ],
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "title": "Access Token",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "expires": {
+            "title": "Expires",
+            "type": "string",
+            "format": "date-time"
+          },
+          "token_type": {
+            "title": "Token Type",
+            "type": "string",
+            "default": "bearer"
+          }
+        }
+      },
+      "User": {
+        "title": "User",
+        "required": [
+          "id",
+          "email",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string",
+            "format": "email"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "token": {
+            "title": "Token",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TokenBase"
+              }
+            ],
+            "default": {}
+          }
+        },
+        "description": "Р¤РѕСЂРјРёСЂСѓРµС‚ С‚РµР»Рѕ РѕС‚РІРµС‚Р° СЃ РґРµС‚Р°Р»СЏРјРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ Рё С‚РѕРєРµРЅРѕРј "
+      },
+      "UserBase": {
+        "title": "UserBase",
+        "required": [
+          "id",
+          "email",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string",
+            "format": "email"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "description": "Р¤РѕСЂРјРёСЂСѓРµС‚ С‚РµР»Рѕ РѕС‚РІРµС‚Р° СЃ РґРµС‚Р°Р»СЏРјРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ "
+      },
+      "UserCreate": {
+        "title": "UserCreate",
+        "required": [
+          "email",
+          "name",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "title": "Email",
+            "type": "string",
+            "format": "email"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "password": {
+            "title": "Password",
+            "type": "string"
+          }
+        },
+        "description": "РџСЂРѕРІРµСЂСЏРµС‚ sign-up "
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      },
+      "WallMaterial": {
+        "title": "WallMaterial",
+        "enum": [
+          "РєРёСЂРїРёС‡",
+          "РїР°РЅРµР»СЊ",
+          "РјРѕРЅРѕР»РёС‚"
+        ],
+        "description": "An enumeration."
+      }
+    },
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "type": "oauth2",
+        "flows": {
+          "password": {
+            "scopes": {},
+            "tokenUrl": "/auth"
+          }
+        }
+      }
+    }
+  }
+}
